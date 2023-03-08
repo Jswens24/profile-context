@@ -3,11 +3,21 @@ const express = require('express');
 const cors = require('cors');
 
 const { SERVER_PORT } = process.env;
+const { sequelize } = require('./util/database');
+const { user } = require('./models/user')
+const { profile } = require('./models/profile')
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
+sequelize.sync()
+    .then(res => {
+        app.listen(SERVER_PORT, () => console.log(`Take us to level ${SERVER_PORT}`));
+    })
+    .catch(err => console.log(err))
 
-app.listen(SERVER_PORT, () => console.log(`Take us to level ${SERVER_PORT}`));
+
+
+
