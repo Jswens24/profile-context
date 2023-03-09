@@ -7,7 +7,8 @@ const { sequelize } = require('./util/database');
 const { User } = require('./models/user')
 const { Profile } = require('./models/profile');
 const { register, login } = require('./controller/authCrtl')
-const { getProfile } = require('./controller/profileCtr')
+const { getProfile } = require('./controller/profileCtr');
+const { isAuthenticated } = require('./middleware/isAuthenticated');
 
 
 const app = express();
@@ -22,7 +23,7 @@ Profile.belongsTo(User)
 app.post('/api/register', register)
 app.post('/api/login', login)
 
-app.get('/api/profile', getProfile)
+app.get('/api/profile', isAuthenticated, getProfile)
 
 
 sequelize.sync()
