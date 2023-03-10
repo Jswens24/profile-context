@@ -17,7 +17,7 @@ module.exports = {
         console.log('hit register')
         try {
             const { username, password } = req.body
-            let foundUser = await User.findOne({ where: { username: username } })
+            let foundUser = await User.findOne({ where: { username } })
             if (foundUser) {
                 res.status(400).send('that username is already taken')
             } else {
@@ -68,7 +68,7 @@ module.exports = {
             } else {
                 res.status(400).send('There is no user with that username')
             }
-        } catch {
+        } catch (err) {
             console.log(err)
             res.status(400).send('Something went wrong in login')
         }
